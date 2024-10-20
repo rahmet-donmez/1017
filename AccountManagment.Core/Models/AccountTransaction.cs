@@ -8,6 +8,7 @@ namespace AccountManagment.Core.Models
 {
     public class AccountTransaction:BaseEntity
     {
+        public decimal Amount { get; set; } = 0;
         public string Description { get; set; }
         public bool Direction { get; set; }//true->gelen false->giden
         public int AccountId { get; set; }

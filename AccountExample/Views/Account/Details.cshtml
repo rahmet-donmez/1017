@@ -1,0 +1,93 @@
+﻿@using AccountExample.Models.Accounts
+@model AccountDetailWithTransacitonViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<body>
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card strpied-tabled-with-hover">
+                        <div class="card-header ">
+                            <h4 class="card-title">Hesap Hareketleri</h4>
+                            <p class="card-category">subtitle yeri</p>
+                        </div>
+                        <div class="card-body table-full-width table-responsive">
+                            <table class="table table-hover table-striped">
+                                <thead>
+                                <th>Yön</th>
+                                <th>İşlem Detayı</th>
+                                <th>İşlem Tutarı</th>
+                                <th>İşlem Tarihi</th>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var transaction in Model.AccountTransacitons)
+                                    {
+                                        <tr>
+                                            <td>@transaction.Direction</td>
+                                            <td>@transaction.Description</td>
+                                            <td>7878 ₺</td>
+                                            <td>@transaction.CreatedDate</td>
+                                        </tr>
+
+
+                                    }
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card card-user">
+                        <div class="card-image">
+                            <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="...">
+                        </div>
+                        <div class="card-body">
+                            <div class="author">
+
+                                <a href="#">
+                                    <img class="avatar border-gray" src="~/icon/profile.png" alt="...">
+
+                                </a>
+                                <h5 class="title"> <b>@Model.AccountDetail.Balance ₺</b> </h5>
+
+                                <br />
+
+                                <p class="description">
+                                    @if (Model.AccountDetail.IsActive)
+                                    {
+                                    <p>Aktif</p>
+                                    }
+                                    else
+                                    {
+                                    <p>Pasif</p>
+
+                                    }
+                                </p>
+                            </div>
+                            <p class="description text-center">
+                                <label>Hesap Numarası: </label> @Model.AccountDetail.Number
+                                <br>
+                                <label>Iban: </label> @Model.AccountDetail.Iban
+                                <br>
+
+                                <label>Oluşturulma Tarihi: </label> @Model.AccountDetail.CreatedDate
+                                <br>
+
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,4 +1,9 @@
+using AccountManagment.Core.Models;
+using AccountManagment.Core.Repositories;
+using AccountManagment.Core.Services;
 using AccountManagment.Repository;
+using AccountManagment.Repository.Repositories;
+using AccountManagment.Service.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -25,8 +30,17 @@ namespace AccountExample
                 });
              
             });
-            var app = builder.Build();
+            builder.Services.AddScoped<IGenericService<User>,GenericService<User>>();
+            builder.Services.AddScoped<IGenericRepository<User>,GenericRepository<User>>();
+            builder.Services.AddScoped<IGenericService<Account>,GenericService<Account>>();
+            builder.Services.AddScoped<IGenericRepository<Account>,GenericRepository<Account>>();
+            builder.Services.AddScoped<IGenericService<AccountTransaction>,GenericService<AccountTransaction>>();
+            builder.Services.AddScoped<IGenericRepository<AccountTransaction>,GenericRepository<AccountTransaction>>();
+            builder.Services.AddScoped<IGenericService<Transfer>,GenericService<Transfer>>();
+            builder.Services.AddScoped<IGenericRepository<Transfer>,GenericRepository<Transfer>>();
 
+            var app = builder.Build();
+            
             // Hata iþleme ve güvenlik ayarlarý
             if (!app.Environment.IsDevelopment())
             {

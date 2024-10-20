@@ -1,12 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AccountManagment.Core.Models;
+using AccountManagment.Core.Repositories;
+using AccountManagment.Core.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AccountExample.Controllers
 {
     public class UserController : Controller
     {
-        public IActionResult Index()
+        private readonly IGenericService<User> _service;
+
+        public UserController(IGenericService<User> service)
         {
-            return View();
+            _service = service;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var user=await _service.GetByIdAsync(1);
+            return View(user);
         }
     }
 }

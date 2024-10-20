@@ -8,6 +8,7 @@ namespace AccountManagment.Core.Models
 {
     public class Transfer: BaseEntity
     {
+        public decimal Amount { get; set; }
         public string Description { get; set; }
         public int TargetAccountId { get; set; }//hedef hesap
         public Account TargetAccount { get; set; }
