@@ -1,56 +1,50 @@
 ﻿@using AccountManagment.Core.Models
 @model List<Transfer>
 
-<!DOCTYPE html>
-<html lang="en">
-
-
-<body>
-
-    <div class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card strpied-tabled-with-hover">
-                        <div class="card-header ">
-                            <h4 class="card-title">Hesaplar</h4>
-                            <p class="card-category">Here is a subtitle for this table</p>
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card strpied-tabled-with-hover" style="border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 20px;">
+                    <div class="card-header" style=" border-radius: 15px 15px 0 0;">
+                        <h3 class="card-title">Transfer Geçmişi</h3>
+                        <div class="text-right">
+                            @Html.ActionLink("Transfer Ekle", "CreateTransfer", "Account", null, new { @class = "btn btn-primary" })
                         </div>
-                        <div class="card-body table-full-width table-responsive">
-                            <table class="table table-hover table-striped">
-                                <thead>
-                                <th>İşlem Tutarı</th>
-                                <th>İlgili Hesap Numarası</th>
-                                <th>Alıcı Adı</th>
-                                <th>Alıcı İban</th>
-                                <th>Açıklama</th>
-                                <th>İşlem Tarihi</th>
+                    </div>
 
-                                </thead>
-                                <tbody>
-                                    @foreach (var transfer in Model)
-                                    {
-                                        <tr>
-                                            <td>@transfer.Amount ₺</td>
-                                            <td>@transfer.SourceAccount.Number</td>
-                                            <td>@transfer.TargetAccount.User.Name @transfer.TargetAccount.User.Surname</td>
-                                            <td>@transfer.TargetAccount.Iban</td>
-                                            <td>@transfer.Description</td>
-                                            <td>@transfer.CreatedDate</td>
+                    <div class="card-body table-full-width table-responsive">
+                        <table class="table table-hover table-striped" style="border-radius: 10px; overflow: hidden;">
+                            <thead style="background-color: rebeccapurple; color: white;">
+                                <tr>
+                                    <th style="color: white;">İlgili Hesap Numarası</th>
+                                    <th style="color: white;">Alıcı Adı</th>
+                                    <th style="color: white;">Alıcı İban</th>
+                                    <th style="color: white;">Açıklama</th>
+                                    <th style="color: white;">İşlem Tarihi</th>
+                                    <th style="color: white;">İşlem Tutarı</th>
 
-                                        </tr>
-                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var transfer in Model)
+                                {
+                                    <tr>
+                                        <td>@transfer.SourceAccount.Number</td>
+                                        <td>@transfer.TargetAccount.User.Name @transfer.TargetAccount.User.Surname</td>
+                                        <td>@transfer.TargetAccount.Iban</td>
+                                        <td>@transfer.Description</td>
+                                        <td>@transfer.CreatedDate</td>
+                                        <td style="color:orangered">@transfer.Amount ₺</td>
 
-
-                                </tbody>
-                            </table>
-                        </div>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-</body>
-
-</html>

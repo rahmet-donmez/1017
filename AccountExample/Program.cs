@@ -30,6 +30,8 @@ namespace AccountExample
                 });
              
             });
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
             builder.Services.AddScoped<IGenericService<User>,GenericService<User>>();
             builder.Services.AddScoped<IGenericRepository<User>,GenericRepository<User>>();
             builder.Services.AddScoped<IGenericService<Account>,GenericService<Account>>();

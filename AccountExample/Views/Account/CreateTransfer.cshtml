@@ -5,17 +5,17 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <div class="card">
+                <div class="card" style="border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 20px;">
                     <div class="card-header">
                         <h4 class="card-title">Para Transferi</h4>
                     </div>
                     <div class="card-body">
-                        <form asp-action="Create" method="post">
+                        <form asp-action="createTransfer" method="post" asp-controller="account" onsubmit="return confirmSubmission()">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label asp-for="SourceAccountId">Gönderilecek Hesap</label>
-                                        <select asp-for="SourceAccountId" class="form-control" asp-items="Model.Accounts">
+                                        <select asp-for="SourceAccountId" class="form-control" asp-items="Model.Accounts" id="sourceAccount">
                                             <option value="">Hesap Seçin</option>
                                         </select>
                                         <span asp-validation-for="SourceAccountId" class="text-danger"></span>
@@ -24,41 +24,58 @@
                             </div>
 
                             <div class="row">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label asp-for="TargetAccountIban">Alıcı Hesap</label>
-                                            <textarea asp-for="TargetAccountIban" rows="4" cols="80" class="form-control" placeholder="Alıcı hesap numarası girin"></textarea>
-                                            <span asp-validation-for="TargetAccountIban" class="text-danger"></span>
-                                        </div>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label asp-for="TargetAccountIban">Alıcı Hesap</label>
+                                        <input asp-for="TargetAccountIban" rows="4" cols="80" class="form-control" placeholder="Alıcı hesap numarası girin" id="targetIban"></input>
+                                        <span asp-validation-for="TargetAccountIban" class="text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-6 pl-1">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <label asp-for="Amount">İşlem Tutarı</label>
-                                        <input asp-for="Amount" class="form-control" placeholder="Tutar Girin" />
+                                        <label asp-for="Amount">İşlem Tutarı (₺)</label>
+                                        <input asp-for="Amount" class="form-control" placeholder="Tutar Girin" id="amount" />
                                         <span asp-validation-for="Amount" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label asp-for="Description">Açıklama</label>
-                                        <textarea asp-for="Description" rows="4" cols="80" class="form-control" placeholder="Açıklama girin"></textarea>
-                                        <span asp-validation-for="Description" class="text-danger"></span>
-                                    </div>
-                                </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label asp-for="Description">Açıklama</label>
+                                <textarea asp-for="Description" rows="4" cols="80" class="form-control" placeholder="Açıklama girin" id="description"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
                             </div>
-
-                            <button type="submit" class="btn btn-info btn-fill pull-right">İşlemi Tamamla</button>
-                            <div class="clearfix"></div>
-                        </form>
+                        </div>
                     </div>
+
+                    <button type="submit" class="btn btn-info btn-fill pull-right" style="background-color:rebeccapurple">İşlemi Tamamla</button>
+                    <div class="clearfix"></div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+</div>
 
+<script>
+    function confirmSubmission() {
+        // Formdaki verileri al
+        const sourceAccount = document.getElementById("sourceAccount").value;
+        const targetIban = document.getElementById("targetIban").value;
+        const amount = document.getElementById("amount").value;
+        const description = document.getElementById("description").value;
+
+        // Dinamik onay mesajını oluştur
+        const message = `Transfer işlemini gerçekleştirmek istediğinize emin misiniz?\n\n` +
+            `Gönderilecek Hesap: ${sourceAccount}\n` +
+            `Alıcı IBAN: ${targetIban}\n` +
+            `İşlem Tutarı: ${amount}\n` +
+            `Açıklama: ${description}`;
+
+        // Kullanıcıdan onay al
+        return confirm(message);
+    }
+</script>

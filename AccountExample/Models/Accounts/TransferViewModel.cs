@@ -18,6 +18,6 @@ namespace AccountExample.Models.Accounts
         [Required(ErrorMessage = "Target Account is required")]
         public string TargetAccountIban { get; set; }
 
-        public List<SelectListItem> Accounts { get; set; } // Hesap listesi için
+        public List<SelectListItem>? Accounts { get; set; } // Hesap listesi için
     }
 }
