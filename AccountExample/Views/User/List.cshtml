@@ -1,0 +1,51 @@
+﻿@using AccountManagment.Core.Models
+@model List<User>
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card strpied-tabled-with-hover" style="border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 20px;">
+                    <div class="card-header" style=" border-radius: 15px 15px 0 0;">
+                        <h3 class="card-title">Kullanıcılar</h3>
+                        
+                    </div>
+
+                    <div class="card-body table-full-width table-responsive">
+                        <table class="table table-hover table-striped" style="border-radius: 10px; overflow: hidden;">
+                            <thead style="background-color: rebeccapurple; color: white;">
+                                <tr>
+                                    <th style="color: white;">Ad Soyad</th>
+                                    <th style="color: white;">Email</th>
+                                    <th style="color: white;">Telefon Numarası</th>
+                                    <th style="color: white;">Kayıt Tarihi</th>
+                                    <th style="color: white;">Detay</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var user in Model)
+                                {
+                                    <tr>
+                                        <td>@user.Name @user.Surname</td>
+                                        <td>@user.Email</td>
+                                        <td>@user.Phone</td>
+                                        <td>@user.CreatedDate</td>
+                                        <td>
+
+                                            <a class="nav-link" href="/User/DetailForAdmin/@user.Id">
+                                                <i class="fas fa-eye"></i>
+
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

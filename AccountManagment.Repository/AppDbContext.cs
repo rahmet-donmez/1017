@@ -1,4 +1,5 @@
 ﻿using AccountManagment.Core.Models;
+using AccountManagment.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,11 @@ namespace AccountManagment.Repository
         public DbSet<Account> Accounts { get; set; }
         public DbSet<AccountTransaction> AccountTransactions { get; set; }
         public DbSet<Transfer> Transfers { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            SeedData.Initialize(modelBuilder);
+        }
 
     }
 

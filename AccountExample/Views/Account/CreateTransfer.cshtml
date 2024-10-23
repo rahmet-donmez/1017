@@ -62,20 +62,17 @@
 
 <script>
     function confirmSubmission() {
-        // Formdaki verileri al
         const sourceAccount = document.getElementById("sourceAccount").value;
         const targetIban = document.getElementById("targetIban").value;
         const amount = document.getElementById("amount").value;
         const description = document.getElementById("description").value;
 
-        // Dinamik onay mesajını oluştur
         const message = `Transfer işlemini gerçekleştirmek istediğinize emin misiniz?\n\n` +
             `Gönderilecek Hesap: ${sourceAccount}\n` +
             `Alıcı IBAN: ${targetIban}\n` +
             `İşlem Tutarı: ${amount}\n` +
             `Açıklama: ${description}`;
 
-        // Kullanıcıdan onay al
         return confirm(message);
     }
 </script>

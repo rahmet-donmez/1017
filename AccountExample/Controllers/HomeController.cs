@@ -1,4 +1,5 @@
 ﻿using AccountExample.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -12,6 +13,7 @@ namespace AccountExample.Controllers
         {
             _logger = logger;
         }
+        [Authorize]
 
         public IActionResult Index()
         {

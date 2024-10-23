@@ -1,35 +1,49 @@
 ﻿<div class="sidebar" style="color:rebeccapurple">
     <div class="sidebar-wrapper">
         <div class="logo">
-            <a href="/Home/Index" class="simple-text">
+            <a href="/User/Index" class="simple-text">
                 Varlık Yönetim Sistemi
             </a>
         </div>
         <ul class="nav">
-            <li >
-                <a class="nav-link" href="/Home/Index">
-                    <i class="fas fa-chart-pie"></i> <!-- Font Awesome ikonu -->
-                    <p>Anasayfa</p>
-                </a>
-            </li>
+          
             <li>
                 <a class="nav-link" href="/User/Index">
-                    <i class="fas fa-user-circle"></i> <!-- Font Awesome ikonu -->
+                    <i class="fas fa-user-circle"></i> 
                     <p>Profilim</p>
                 </a>
             </li>
+            
             <li>
                 <a class="nav-link" href="/Account/Index">
-                    <i class="fas fa-file-alt"></i> <!-- Font Awesome ikonu -->
+                    <i class="fas fa-file-alt"></i> 
                     <p>Hesaplarım</p>
                 </a>
             </li>
             <li>
                 <a class="nav-link" href="/Account/ListTransfer">
-                    <i class="fas fa-paper-plane"></i> <!-- Font Awesome ikonu -->
+                    <i class="fas fa-paper-plane"></i> 
                     <p>Para Transferi</p>
                 </a>
             </li>
+         
+         
+            @if (User.IsInRole("Admin")) // Yalnızca admin rolüne sahip kullanıcılar için
+            {
+                <li>
+                    <a class="nav-link" href="/User/List">
+                        <i class="fas fa-users"></i> 
+                        <p>Kullanıcılar</p>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="/Account/ListAllTransfer">
+                        <i class="fas fa-exchange-alt"></i> 
+                        <p>Para Transferleri</p>
+                    </a>
+                </li>
+            }
+
         </ul>
     </div>
 </div>

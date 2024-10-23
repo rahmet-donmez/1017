@@ -1,0 +1,76 @@
+﻿@using AccountManagment.Core.Models
+@model List<Transfer>
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card strpied-tabled-with-hover" style="border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 20px;">
+                    <div class="card-header" style=" border-radius: 15px 15px 0 0;">
+                        <h3 class="card-title">Tüm Transferler</h3>
+                        
+                    </div>
+
+                    <div class="card-body table-full-width table-responsive">
+                        <table class="table table-hover table-striped" style="border-radius: 10px; overflow: hidden;">
+                            <thead style="background-color: rebeccapurple; color: white;">
+                                <tr>
+                                    <th style="color: white;">Gönderici</th>
+                                    <th style="color: white;">Alıcı</th>
+                                    <th style="color: white;">İşlem Tarihi</th>
+                                    <th style="color: white;">İşlem Tutarı</th>
+                                    <th style="color: white;"></th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var transfer in Model)
+                                {
+                                    <tr>
+                                        <td>@transfer.SourceAccount.User.Name @transfer.SourceAccount.User.Surname</td>
+                                        <td>@transfer.TargetAccount.User.Name @transfer.TargetAccount.User.Surname</td>
+                                        <td>@transfer.CreatedDate</td>
+                                        <td style="color:orange">@transfer.Amount ₺</td>
+                                        <td>
+                                            <button type="button" class="btn btn-info" style="margin-right: 10px;" data-toggle="modal" data-target="#detailsModal_@transfer.Id">
+                                                Detay
+                                            </button>
+
+                                            <a class="btn btn-danger" href="/Account/RemoveTransfer/@transfer.Id">
+                                                İptal Et
+                                            </a>
+                                        </td>
+
+                                    </tr>
+
+                                    <div class="modal fade" id="detailsModal_@transfer.Id" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel_@transfer.Id" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="detailsModalLabel_@transfer.Id">Transfer Detayları</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p><strong>Açıklama:</strong> @transfer.Description</p>
+                                                    <p><strong>Gönderici IBAN:</strong> @transfer.SourceAccount.Iban</p>
+                                                    <p><strong>Alıcı IBAN:</strong> @transfer.TargetAccount.Iban</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

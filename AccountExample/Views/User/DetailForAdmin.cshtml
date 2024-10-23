@@ -1,0 +1,81 @@
+﻿@using AccountExample.Models.Users
+@model UserDetailForAdminViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<body>
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card strpied-tabled-with-hover" style="border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 20px;">
+                        <div class="card-header" style="border-radius: 15px 15px 0 0;">
+                            <h4 class="card-title">Kullanıcının Hesapları</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                                <table class="table table-hover table-striped" style="border-radius: 10px; overflow: hidden;">
+                                    <thead style="background-color: rebeccapurple; color: white;">
+                                    <th style="color: white;">Aktiflik Durumu</th>
+                                    <th style="color: white;">Hesap Numarası</th>
+                                    <th style="color: white;">Iban</th>
+                                    <th style="color: white;">Bakiye</th>
+                                    <th style="color: white;">Tip</th>
+                                    <th style="color: white;">Oluşturulma Tarihi</th>
+                                    <th style="color: white;"></th>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var account in Model.Accounts)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <span style="color: @(account.IsActive ? "green" : "red");">
+                                                        @(account.IsActive ? "Aktif" : "Pasif")
+                                                    </span>
+                                                </td>
+                                                <td>@account.Number</td>
+                                                <td>@account.Iban</td>
+                                                <td>@account.Balance ₺</td>
+                                                <td>@account.Type</td>
+                                                <td>@account.CreatedDate</td>
+                                                <td>
+                                                    <a class="btn btn-danger" href="/Account/RemoveAccount/@account.Id"
+                                                       onclick="return confirm('Bu hesabı silmek istediğinize emin misiniz?');">
+                                                        Hesabı Sil
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card card-user" style="border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 20px;">
+                        <div class="card-image">
+                            <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="...">
+                        </div>
+                        <div class="card-body">
+                            <div class="author">
+                                <img class="avatar border-gray" src="~/icon/profile.png" alt="...">
+                                <h5 class="title" style="color:purple">@Model.User.Name @Model.User.Surname</h5>
+                                <p class="description">
+                                    <label>Email: </label> @Model.User.Email</br>
+                                    <label>Telefon: </label> @Model.User.Phone</br>
+                                    <label>Hesap oluşturulma tarihi: </label> @Model.User.CreatedDate</br>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

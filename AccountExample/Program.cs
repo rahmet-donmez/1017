@@ -4,6 +4,7 @@ using AccountManagment.Core.Services;
 using AccountManagment.Repository;
 using AccountManagment.Repository.Repositories;
 using AccountManagment.Service.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -21,7 +22,21 @@ namespace AccountExample
             {
                 mvcBuilder.AddRazorRuntimeCompilation();
             }
+            builder.Services.AddHttpContextAccessor(); // IHttpContextAccessor kullanýmý için ekleyin
 
+            // Cookie kimlik doðrulamasýný yapýlandýrýn
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            })
+            .AddCookie(options =>
+            {
+                options.LoginPath = "/User/Login"; // Giriþ sayfasý
+                options.LogoutPath = "/User/Logout"; // Çýkýþ sayfasý
+                options.AccessDeniedPath = "/User/AccessDenied"; // Eriþim reddedildi sayfasý
+            });
             builder.Services.AddDbContext<AppDbContext>(x =>
             {
                 x.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSqlConnection"), options =>
@@ -40,6 +55,7 @@ namespace AccountExample
             builder.Services.AddScoped<IGenericRepository<AccountTransaction>,GenericRepository<AccountTransaction>>();
             builder.Services.AddScoped<IGenericService<Transfer>,GenericService<Transfer>>();
             builder.Services.AddScoped<IGenericRepository<Transfer>,GenericRepository<Transfer>>();
+            builder.Services.AddScoped<LoginService, LoginService>();
 
             var app = builder.Build();
             
@@ -56,12 +72,13 @@ namespace AccountExample
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             // Varsayýlan rota ayarlarý
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=User}/{action=Index}/{id?}");
 
             app.Run();
         }
