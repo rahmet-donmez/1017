@@ -7,6 +7,7 @@ using AccountManagment.Service.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace AccountExample.Controllers
 {
@@ -26,7 +27,13 @@ namespace AccountExample.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var user=await _userService.GetByIdAsync(1);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (string.IsNullOrEmpty(userId) || !int.TryParse(userId, out var parsedUserId))
+            {
+                return RedirectToAction("Login", "User");
+            }
+            var user=await _userService.GetByIdAsync(parsedUserId);
             return View(user);
         }
         [HttpGet]

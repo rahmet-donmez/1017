@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using System.Security.Principal;
 
 namespace AccountExample.Controllers
 {
@@ -176,7 +177,7 @@ namespace AccountExample.Controllers
 
                         await transaction.CommitAsync();
 
-                        return RedirectToAction("ListTransfer", "Account", targetAccount.Id);
+                        return RedirectToAction("ListTransfer", "Account", new { id = targetAccount.Id } );
                     }
                     catch (Exception ex)
                     {
@@ -313,7 +314,7 @@ namespace AccountExample.Controllers
             await _accountService.UpdateAsync(account);
 
 
-            return RedirectToAction("DetailForAdmin", "User",account.User.Id);
+            return RedirectToAction("DetailForAdmin", "User", new { id = account.User.Id });
         }
     }
 }
